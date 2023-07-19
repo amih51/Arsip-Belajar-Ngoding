@@ -1,16 +1,28 @@
 #include <iostream>
-#include <array>
+#include <vector>
 
 using namespace std;
 
 int main() {
-    array<int, 5> nilai = {1, 2, 3, 4, 5};
-    cout << "Jumlah elemen dalam array std::array: " << nilai.size() << endl;
+    int n, q;
+    cin >> n >> q;
 
-    int nilai2[] = {1, 2, 3, 4, 5};
-    cout << sizeof(nilai2) << "\n" << sizeof(nilai2[0]) << endl;
-    int jumlahElemen = sizeof(nilai2) / sizeof(nilai2[0]);
-    cout << "Jumlah elemen dalam array standar: " << jumlahElemen << endl;
+    vector<vector<int>> arr(n);
+
+    for (int i = 0; i < n; i++) {
+        int size;
+        cin >> size;
+        arr[i].resize(size);
+        for (int j = 0; j < size; j++) {
+            cin >> arr[i][j];
+        }
+    }
+
+    for (int k = 0; k < q; k++) {
+        int i, j;
+        cin >> i >> j;
+        cout << arr[i][j] << endl;
+    }
 
     return 0;
 }
