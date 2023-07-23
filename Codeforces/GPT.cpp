@@ -1,28 +1,44 @@
 #include <iostream>
-#include <unordered_set>
-#include <string> // tambahkan include untuk tipe data string
-
+#include <vector>
 using namespace std;
 
-int main(){
-    string n; // ubah tipe data n menjadi string
+int main() {
+    int n;
     cin >> n;
 
-    int next = 0;
-    int temp = stoi(n); // ubah string menjadi integer menggunakan stoi
-    int size = n.size();
-    unordered_set<char> set; // ubah unordered_set menjadi unordered_set<char>
-    while(next < temp){ // ubah n menjadi temp
-        temp += 1;
-        set.clear(); // hapus setiap iterasi
-        for (char c : to_string(temp)){ // ubah integer menjadi string menggunakan to_string
-            set.insert(c);
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    int inMin = 0, inMax = 0;
+    int min = arr[0], max = arr[0];
+
+    // Mencari nilai minimum dan maksimum serta indeksnya
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+            inMax = i;
         }
-        if(size == set.size()){
-            next = temp; // ubah == menjadi =
+        if (arr[i] < min) {
+            min = arr[i];
+            inMin = i;
         }
     }
-    cout << next << endl;
-    
-    return 0; // tambahkan return 0 di akhir main
+
+    // Sorting
+    int hasil = 0;
+    for (int i = inMin; i < n - 1; i++) {
+        swap(arr[i], arr[i + 1]);
+        hasil++;
+    }
+    for (int i = inMax; i > 0; i--) {
+        swap(arr[i], arr[i - 1]);
+        hasil++;
+    }
+
+    // cout << inMax << endl;
+    // cout << inMin << endl;
+
+    cout << hasil << endl;
 }
