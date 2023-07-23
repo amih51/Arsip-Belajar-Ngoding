@@ -1,7 +1,3 @@
-#include <iostream>
-using namespace std;
-
-int main(){
     int start[3][3] = {{1,1,1},{1,1,1},{1,1,1}}; 
     int input[3][3];
     for(int i = 0; i < 3; i++){
@@ -76,4 +72,3 @@ int main(){
     }
 
     return 0;
-}
