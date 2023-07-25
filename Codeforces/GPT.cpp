@@ -1,44 +1,19 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
 int main() {
-    int n;
-    cin >> n;
+    int n, k, l, c, d, p, nl, np;
+    cin >> n >> k >> l >> c >> d >> p >> nl >> np;
 
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
-    }
+    // Calculate the number of toasts each friend can make
+    int toasts_bottles = (k * l) / (n * nl);
+    int toasts_limes = c * d / n;
+    int toasts_salt = p / (n * np);
 
-    int inMin = 0, inMax = 0;
-    int min = arr[0], max = arr[0];
+    // Find the minimum number of toasts among the three quantities
+    int min_toasts = min(toasts_bottles, min(toasts_limes, toasts_salt));
 
-    // Mencari nilai minimum dan maksimum serta indeksnya
-    for (int i = 1; i < n; i++) {
-        if (arr[i] > max) {
-            max = arr[i];
-            inMax = i;
-        }
-        if (arr[i] < min) {
-            min = arr[i];
-            inMin = i;
-        }
-    }
+    cout << min_toasts << endl;
 
-    // Sorting
-    int hasil = 0;
-    for (int i = inMin; i < n - 1; i++) {
-        swap(arr[i], arr[i + 1]);
-        hasil++;
-    }
-    for (int i = inMax; i > 0; i--) {
-        swap(arr[i], arr[i - 1]);
-        hasil++;
-    }
-
-    // cout << inMax << endl;
-    // cout << inMin << endl;
-
-    cout << hasil << endl;
+    return 0;
 }
