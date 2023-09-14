@@ -30,16 +30,17 @@ if __name__ == "__main__":
 
         user_option = input("Select number: ")
 
-        print("\n" + "="*26 + "\n")
+        print("\n" + "="*26)
         
         match user_option:
-            case "1": print("Create")
+            case "1": CRUD.create_console()
             case "2": CRUD.read_console()
-            case "3": print("Update")
-            case "4": print("Delete")
+            case "3": CRUD.update_console()
+            case "4": CRUD.delete_console()
 
-        print("\n" + "="*26)
-        is_done = input("Do you want to exit (y/n)? ")
+        print("="*26)
+        is_done = input("Do you want to exit (y/n) ? ")
+        print("="*26)
         if is_done in 'Yy':
             print('\n' + "#"*3 + " THANK YOU " + "#"*3 + "\n")
             break
