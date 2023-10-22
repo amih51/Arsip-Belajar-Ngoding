@@ -1,0 +1,19 @@
+* {
+    color: blueviolet;
+    background-color: antiquewhite;
+}
+
+h1 {
+    color: rgb(255, 182, 157); 
+    text-align: center;
+    background-color: rgb(210, 108, 108);
+}
+
+div {
+    background-color: rgb(255, 214, 161);
+    border: 1px;
+}
+
+p {
+    font-family: Calibri;
+}

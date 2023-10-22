@@ -1,19 +1,53 @@
 #include <iostream>
+#include <set>
+
 using namespace std;
 
-int main() {
-    int n, k, l, c, d, p, nl, np;
-    cin >> n >> k >> l >> c >> d >> p >> nl >> np;
+const int sqrt_lim = 1000001;
 
-    // Calculate the number of toasts each friend can make
-    int toasts_bottles = (k * l) / (n * nl);
-    int toasts_limes = c * d / n;
-    int toasts_salt = p / (n * np);
+set<long long> prime_squares()
+{
+    static bool arr[sqrt_lim];
 
-    // Find the minimum number of toasts among the three quantities
-    int min_toasts = min(toasts_bottles, min(toasts_limes, toasts_salt));
+    for (int i = 2; i*i < sqrt_lim; i++)
+    {
+        if (!arr[i])
+        {
+            for (int j = i*i; j < sqrt_lim; j += i)
+            {
+                arr[j] = true;
+            }
+        }
+    }
 
-    cout << min_toasts << endl;
+    set<long long> res;
+    for (int i = 2; i < sqrt_lim; i++)
+    {
+        if (!arr[i]){
+            res.insert((long long)i * i);
+        }
+    }
+    return res;
+}
 
-    return 0;
+int main()
+{
+    ios_base::sync_with_stdio(false); cin.tie(NULL);
+
+    set<long long> sq(prime_squares());
+
+    int n; cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        long long x; cin >> x;
+
+        if (sq.find(x) != sq.end())
+        {
+            cout << "YES\n";
+        }
+        else
+        {
+            cout << "NO\n";
+        }
+    }
 }

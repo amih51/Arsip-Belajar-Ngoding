@@ -1,51 +1,38 @@
-#include <iostream>
-#include <set>
-
+#include <bits/stdc++.h>
 using namespace std;
+typedef long long ll;
 
-const int sqrt_lim = 1000001;
+const int sqrt_lim = 1e6 + 1;
 
-set<long long> prime_squares()
-{
-    static bool arr[sqrt_lim];
+int n;
+bool prime[sqrt_lim];
+set<ll> tprime;
 
-    for (int i = 2; i*i < sqrt_lim; i++)
-    {
-        if (!arr[i])
-        {
-            for (int j = i*i; j < sqrt_lim; j += i)
-            {
-                arr[j] = true;
+void TPrime(){
+    for (int i = 2; i*i < sqrt_lim; i++) {
+        if(!prime[i])
+            for (int j = i * i; j < sqrt_lim; j += i){
+                prime[j] = true;
             }
+    }
+    for (int i = 2; i < sqrt_lim; i++){
+        if (!prime[i]){
+            tprime.insert((ll)i * i);
         }
     }
-
-    set<long long> res;
-    for (int i = 2; i < sqrt_lim; i++)
-    {
-        if (!arr[i])
-            res.insert((long long)i * i);
-    }
-    return res;
 }
 
-int main()
-{
-    ios_base::sync_with_stdio(false); cin.tie(NULL);
+int main(){
+    ios::sync_with_stdio(0), cin.tie(0);
+    TPrime();
 
-    set<long long> sq(prime_squares());
+    cin >> n;
+    for (int i = 0; i < n; i++){
+        ll x; cin >> x;
 
-    int n; cin >> n;
-    for (int i = 0; i < n; i++)
-    {
-        long long x; cin >> x;
-
-        if (sq.find(x) != sq.end())
-        {
+        if (tprime.find(x) != tprime.end()) {
             cout << "YES\n";
-        }
-        else
-        {
+        } else {
             cout << "NO\n";
         }
     }

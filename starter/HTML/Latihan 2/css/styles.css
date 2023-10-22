@@ -1,0 +1,35 @@
+body{
+    background-color: antiquewhite;
+}
+
+h1{
+    text-align: center;
+    background-color: rgb(255, 167, 52);
+    padding: 10px;
+}
+
+div{
+    background-color: rgb(255,208,148);
+    padding: 20px;
+}
+
+h2{
+    font-family: Verdana;
+    background-color: rgb(248, 189, 111);
+    padding: 10px;
+}
+
+h3{
+    text-align: right;
+    font-size: medium;
+}
+
+h3 span{
+    font-family: Verdana;
+    color: rgb(196, 127, 0);
+    font-style: italic;
+}
+
+p{
+    text-align: justify;
+}
