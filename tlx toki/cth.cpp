@@ -1,75 +1,104 @@
 #include <bits/stdc++.h>
 using namespace std;
-typedef struct dance {
-    int d;
-    char t;
-}tarian;
-int ksum[3628800] = {0}, indx = 0, y, r, n;
-tarian bebek[10];
-bool pernah[10] = {};
+typedef unsigned long long ull;
+typedef long long ll;
+typedef struct pelat {
+    ull nomor, harga;
+}plat;
+ull n, duit;
+plat * calon_sorted, * calon;
+int * terbeli;
 
-void compute(int t, int k, int now, char before, bool yakin) {
-    if(t == r) {
-        ksum[indx] = k;
-                                        // cout << endl;
-        indx++;
-        return;
-    }
-    for(int i=0; i<n; i++) {
-        if(pernah[i]) continue;
-                                // cout << k;
-        int tmp = bebek[i].d;
-        if(before == 'P') tmp <<= 1;
-        else if(before == 'L') tmp >>= 1;
-        if(yakin) tmp += y;
-                                // cout << " *** " << k + tmp ;
-        pernah[i] = true;
-        compute(t + 1, k + tmp, i, bebek[i].t, (bebek[i].t == 'Y' || yakin));
-        pernah[i] = false;
-    }
+bool compVal(plat a, plat b) {
+    if(a.harga == b.harga)
+        return a.nomor > b.nomor;
+    return a.harga < b.harga;
 }
 
-int binsearch(int left, int right, int n) {
-    if(left == right || (((right - left) == 1) && (ksum[right] > n))) return left;
-    if(((right - left) == 1) && (ksum[right] <= n)) return right; 
-    int mid = left + ((right - left) >> 1);
-    if(ksum[mid] == n) {
-        if(ksum[mid + 1] > n) return mid;
-        return binsearch(mid + 1, right, n);
+void beliPlat(ull start, ull end, bool isSaveToArray = false) {
+    for(ull i=start; i<end; i++) {
+        for(int j=n; j>=0; j--) {
+            if(calon[j].harga <= duit) {
+                duit -= calon[j].harga;
+                if(isSaveToArray) terbeli[i] = j;
+                cout<<j;
+                break;
+            }
+        }
     }
-    else if(ksum[mid] > n) return binsearch(left, mid, n);
-    else return binsearch(mid, right, n);
+    cout<<'\n';
+}
+
+void getPlat() {
+    bool termurahnyanol = (calon_sorted[0].nomor == 0);
+    ull murahbukannol = ((termurahnyanol) ? calon_sorted[1].harga : calon_sorted[0].harga);
+    ull termurah = calon_sorted[0].harga;
+    bool isinyanol = (murahbukannol > duit);
+    if(isinyanol || n == 0) {
+        cout<<"1\n0\n0\n";
+        return;
+    }
+    ull length = ((duit - murahbukannol) / termurah) + 1;
+    cout<<length<<'\n';
+    duit -= ((length - 1) * termurah);
+    for(ull i=0; i<=n; i++)
+        calon[i].harga -= termurah;
+    if(length < 100) terbeli = new int[length];
+    for(int i=n; i>=0; i--) {
+        ull currentprice = calon[i].harga + termurah;
+        if(currentprice <= duit) { 
+            // cout << "|";
+            duit -= currentprice;
+            if(length < 100) terbeli[0] = i;
+            cout<<i;
+            cout << "|";
+            break;
+        }
+    }
+    // cout << duit << " " << termurah << " " << length << endl;
+    if(length < 100) {
+        beliPlat(1, ((length <= 50) ? length : 50), true);
+        // cout << "|";
+        if(length <= 50) {
+            for(int i=0; i<length; i++)
+                cout<<terbeli[i];
+            cout<<'\n';
+        } else {
+            for(int i=(length - 50); i<50; i++)
+                cout<<terbeli[i];
+            ull sisa = length - 50;
+            beliPlat(0, sisa);
+        }
+    } else if(length >= 100) {
+        beliPlat(1, 50);
+        ull r = (length - 100), l = 0;
+        for(int i=n; i>=0 && duit > 0 && (l < r); i--) {
+            if(calon[i].harga == 0) break;
+            ull buy = (duit/calon[i].harga);
+            if((l + buy) > r)
+                buy = (r - l);
+            l += buy;
+            buy *= calon[i].harga;
+            duit -= ((duit > buy) ? buy : duit);
+        }
+        beliPlat(0, 50);
+    }
 }
 
 int main() {
-    ios::sync_with_stdio(0), cin.tie(0);
-    int j, h;
-    scanf("%*s %*d");
-    cin>>n>>r>>y>>j;
-    for(int i=0; i<n; i++) {
-        cin>>bebek[i].d>>bebek[i].t;
+    cin>>n;
+    calon_sorted = new plat[n + 1], calon = new plat[n + 1];
+    for(ull i=0; i<=n; i++){
+        calon_sorted[i].nomor = i;
+        calon[i].nomor = i;
+        cin>>calon_sorted[i].harga;
+        calon[i].harga = calon_sorted[i].harga;
     }
-    for(int i=0; i<n; i++) {
-        pernah[i] = true;
-        compute(1, bebek[i].d, i, bebek[i].t, bebek[i].t == 'Y');
-        pernah[i] = false;
-    }
-    sort(ksum, ksum + indx);
-                        for(int i = 0; i < 3628800; i++){
-                            if(ksum[i] == 0) continue;
-                            cout << i << " === " << ksum[i] << endl;
-                        }
-    for(int i=0; i<j; i++) {
-        cin>>h;
-        if(h > ksum[indx - 1]) {
-            cout<<0<<'\n';
-            continue;
-        }
-        if(h < ksum[0]) {
-            cout<<indx<<'\n';
-            continue;
-        }
-        cout<<indx - binsearch(0, indx - 1, h) - 1<<'\n';
-    }
+    cin>>duit;
+    sort(calon_sorted, calon_sorted + n + 1, compVal);
+    if(calon_sorted[0].harga > duit)
+        cout<<"0\n";
+    else
+        getPlat();
     return 0;
 }
