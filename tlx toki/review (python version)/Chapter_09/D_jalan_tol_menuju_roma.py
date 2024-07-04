@@ -1,38 +1,47 @@
-from collections import defaultdict, deque
+n, j, t, st, en = map(int, input().split())
 
-N, L, T, A, B = map(int, input().split())
-nor = [map(int, input().split()) for _ in range(L)]
-tol = [map(int, input().split()) for _ in range(T)]
+adj = [[] for _ in range(505)]
+for i in range(j):
+    u, v = map(int, input().split())
+    adj[u].append(v)
+    adj[v].append(u)
 
-graph = defaultdict(list)
-for p, c in nor:
-    graph[p].append((c, False))
-    graph[c].append((p, False))
-for p, c in tol:
-    graph[p].append((c, True))
-    graph[c].append((p, True))
-
-def bfs(start, end):
-    q = deque([(start, 0, False)])
-    vst = set()
+tol = []
+for i in range(t):
+    u, v = map(int, input().split())
+    tol.append([u, v])
     
+from collections import deque
+
+def bfs(x):
+    dist = [float('inf')] * 505
+    visited = [False] * 505
+    q = deque()
+    
+    q.append(x)
+    dist[x] = 0
+    visited[x] = True
+
     while q:
-        cur, path, to = q.popleft()
-        if cur in vst:
-            continue
+        s = q.popleft()
+        for i in adj[s]:
+            if not visited[i]:
+                visited[i] = True
+                dist[i] = dist[s] + 1
+                q.append(i)
+                
+    return dist
 
-        vst.add(cur)
-        
-        if cur == end:
-            return path
-        
-        for nb, is_tol in graph[cur]:
-            if nb not in vst:
-                if not is_tol:
-                    q.append((nb, path + 1, False))
-                elif not to:
-                    q.append((nb, path + 1, True))
-                    
-    return []
+initial_dist = bfs(st)
+res = initial_dist[en]
 
-print(bfs(A, B))
+for u, v in tol:
+    adj[u].append(v)
+    adj[v].append(u)
+    dist = bfs(st)
+    if dist[en] != float('inf'):
+        res = min(res, dist[en])
+    adj[u].remove(v)
+    adj[v].remove(u)
+
+print(res)

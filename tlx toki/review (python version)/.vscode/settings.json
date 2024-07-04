@@ -4,5 +4,6 @@
         "chrono": "cpp",
         "span": "cpp",
         "iomanip": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
