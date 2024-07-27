@@ -13,4 +13,4 @@ def f(y, x):
 
 M = 10**9
 A, B, C, D = map(lambda x: int(x) + M, input().split())
-print(f(D, C) - f(D, A) - f(B, C) + f(B, Af))
+print(f(D, C) - f(D, A) - f(B, C) + f(B, A))
