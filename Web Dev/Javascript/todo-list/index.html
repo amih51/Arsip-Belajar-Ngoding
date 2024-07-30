@@ -4,74 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TO DO LIST</title>
-
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
+    
     <link rel="stylesheet" href="./main.css" />
+    <script src="./main.js" defer></script>
 </head>
 <body>
-    <main class="app">
-        <section class="greeting">
-            <h2 class="title">
-                Hello, <input type="text" id="name" placeholder="Name here">
-            </h2>
-        </section>
-
-        <section class="create-todo">
-            <form id="new-todo-form">
-                <input type="text" name="content" id="content" placeholder="e.g. make a video">
-                
-                <h4>Pick a category</h4>
-                <div class="options">
-                    
-                    <label>
-                        <input 
-                            type="radio"
-                            name="category"
-                            id="category"
-                            value="business">
-                        <span class="bubble business"></span>
-                        <div>Business</div>
-                    </label>
-                    
-                    <label>
-                        <input 
-                        type="radio"
-                        name="category"
-                        id="category2"
-                        value="personal">
-                        <span class="bubble personal"></span>
-                        <div>Personal</div>
-                    </label>
-                </div>
-                
-                <input type="submit" value="Add todo">
-            </form>
-        </section>
-
-        <section class="todo-list">
-            <h3>TODO LIST</h3>
-            <div class="list" id="todo-list">
-                <div class="todo-item">
-                    <label>
-                        <input type="checkbox">
-                        <span class="bubble business"></span>
-                    </label>
-
-                    <div class="todo-content">
-                        <input type="text" value="Make a video" readonly>
-                    </div>
-
-                    <div class="actions">
-                        <button class="edit">Edit</button>
-                        <button class="delete">Delete</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-    <script src="./main.js"></script>
+    <div id="items"></div>
+    <template id="item-template">
+        <div class="item">
+            <input type="checkbox" class="item-completed">
+            <input type="text" class="item-description" placeholder="To-Do item...">
+        </div>
+    </template>
+    <button id="add">Add items</button>
 </body>
 </html>
